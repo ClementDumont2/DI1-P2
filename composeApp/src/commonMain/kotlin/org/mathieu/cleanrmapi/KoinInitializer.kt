@@ -11,5 +11,6 @@ fun initKoin(config: KoinAppDeclaration? = null) =
         config?.invoke(this)
         modules(dataModules)
         modules(remoteModule, repositoriesModule)
+        allowOverride(true)
     }
 

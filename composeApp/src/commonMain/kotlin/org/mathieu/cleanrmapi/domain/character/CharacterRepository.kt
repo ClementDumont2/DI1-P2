@@ -1,6 +1,7 @@
 package org.mathieu.cleanrmapi.domain.character
 
 import kotlinx.coroutines.flow.Flow
+import org.mathieu.cleanrmapi.common.CommonFlow
 import org.mathieu.cleanrmapi.domain.character.models.Character
 import org.mathieu.cleanrmapi.domain.character.models.CharacterDetails
 import org.mathieu.cleanrmapi.domain.episode.models.Episode
@@ -12,7 +13,7 @@ interface CharacterRepository {
      *
      * @return A flow emitting a list of characters.
      */
-    suspend fun getCharacters(): Flow<List<Character>>
+    suspend fun getCharacters(): CommonFlow<List<Character>>
 
     /**
      * Loads more characters from the data source, usually used for pagination purposes.

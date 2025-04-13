@@ -44,29 +44,26 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
-import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.mathieu.cleanrmapi.domain.character.models.CharacterGender
 import org.mathieu.cleanrmapi.domain.character.models.CharacterStatus
 import org.mathieu.cleanrmapi.domain.episode.models.Episode
 import org.mathieu.cleanrmapi.ui.core.composables.Avatar
 import org.mathieu.cleanrmapi.ui.core.composables.BackArrow
 import org.mathieu.cleanrmapi.ui.core.composables.IconWithImage
-import org.mathieu.cleanrmapi.ui.core.composables.PreviewContent
 import org.mathieu.cleanrmapi.ui.core.composables.Screen
 import org.mathieu.cleanrmapi.ui.core.extensions.imageVector
 import org.mathieu.cleanrmapi.ui.core.extensions.text
+import org.mathieu.cleanrmapi.ui.core.navigation.NavigatorProvider
+import org.mathieu.cleanrmapi.ui.core.navigation.popBack
 import org.mathieu.cleanrmapi.ui.core.theme.PrimaryColor
 import org.mathieu.cleanrmapi.ui.core.theme.SurfaceColor
 
 @Composable
 fun CharacterDetailsScreen(
-    navController: NavController,
     id: Int
 ) {
     Screen(
-        viewModel = viewModel { CharacterDetailsViewModel() },
-        navController = navController
+        viewModel = viewModel { CharacterDetailsViewModel() }
     ) { state, viewModel ->
 
         LaunchedEffect(key1 = Unit) {
@@ -75,7 +72,7 @@ fun CharacterDetailsScreen(
 
         Content(
             state = state,
-            onClickBack = navController::popBackStack,
+            onClickBack = NavigatorProvider.navigator::popBack,
             onAction = viewModel::handleAction
         )
 
@@ -289,10 +286,3 @@ private object CharacterDetailsContent {
 
 
 }
-
-@Preview
-@Composable
-private fun CharacterDetailsPreview() = PreviewContent {
-    Content()
-}
-

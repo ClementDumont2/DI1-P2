@@ -5,8 +5,8 @@ import org.mathieu.cleanrmapi.domain.character.CharacterRepository
 import org.mathieu.cleanrmapi.domain.character.models.CharacterGender
 import org.mathieu.cleanrmapi.domain.character.models.CharacterStatus
 import org.mathieu.cleanrmapi.domain.episode.models.Episode
-import org.mathieu.cleanrmapi.ui.core.Destination
 import org.mathieu.cleanrmapi.ui.core.ViewModel
+import org.mathieu.cleanrmapi.ui.core.navigation.EpisodeDestination.EpisodeDetails
 
 sealed interface CharacterDetailsAction {
     data class SelectedEpisode(val episode: Episode): CharacterDetailsAction
@@ -52,7 +52,7 @@ class CharacterDetailsViewModel :
     fun handleAction(action: CharacterDetailsAction) {
         when(action) {
             is CharacterDetailsAction.SelectedEpisode ->
-                sendEvent(Destination.EpisodeDetails(action.episode.id.toString()))
+                sendEvent(EpisodeDetails(action.episode.id))
         }
     }
 

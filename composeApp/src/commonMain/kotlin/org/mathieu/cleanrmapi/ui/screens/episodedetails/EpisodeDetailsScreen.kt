@@ -24,24 +24,21 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.mathieu.cleanrmapi.ui.core.composables.BackArrow
 import org.mathieu.cleanrmapi.ui.core.composables.CharacterCard
 import org.mathieu.cleanrmapi.ui.core.composables.PreviewContent
 import org.mathieu.cleanrmapi.ui.core.composables.Screen
+import org.mathieu.cleanrmapi.ui.core.navigation.NavigatorProvider
+import org.mathieu.cleanrmapi.ui.core.navigation.popBack
 import org.mathieu.cleanrmapi.ui.core.theme.PrimaryColor
 import org.mathieu.cleanrmapi.ui.core.theme.SurfaceColor
 
 @Composable
-fun EpisodeDetailsScreen(
-    navController: NavController,
-    id: Int
-) {
+fun EpisodeDetailsScreen(id: Int) {
 
     Screen(
-        viewModel = viewModel { EpisodeDetailsViewModel() },
-        navController = navController
+        viewModel = viewModel { EpisodeDetailsViewModel() }
     ) { state, viewModel ->
 
         LaunchedEffect(key1 = Unit) {
@@ -50,7 +47,7 @@ fun EpisodeDetailsScreen(
 
         Content(
             state = state,
-            onClickBack = navController::popBackStack,
+            onClickBack = NavigatorProvider.navigator::popBack,
             onAction = viewModel::handleAction
         )
 
@@ -80,7 +77,7 @@ private fun Content(
     Crossfade(targetState = state) {
         when (it) {
             is EpisodeDetailsState.Error -> ErrorView(error = it.message)
-            is EpisodeDetailsState.Loaded -> CharacterDetailsContent(
+            is EpisodeDetailsState.Loaded -> EpisodeDetailsContent(
                 state = it,
                 onAction = onAction
             )
@@ -106,7 +103,7 @@ private fun ErrorView(error: String) {
 }
 
 
-private object CharacterDetailsContent {
+private object EpisodeDetailsContent {
 
     @Composable
     operator fun invoke(
@@ -124,8 +121,6 @@ private object CharacterDetailsContent {
             LazyVerticalGrid(
                 columns = GridCells.Fixed(2)
             ) {
-
-
 
                 items(state.characters) { character ->
 

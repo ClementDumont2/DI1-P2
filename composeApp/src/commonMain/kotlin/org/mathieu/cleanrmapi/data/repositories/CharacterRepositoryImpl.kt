@@ -4,6 +4,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import org.mathieu.cleanrmapi.common.CommonFlow
+import org.mathieu.cleanrmapi.common.asCommonFlow
 import org.mathieu.cleanrmapi.common.mapElement
 import org.mathieu.cleanrmapi.common.toList
 import org.mathieu.cleanrmapi.data.local.CharacterDAO
@@ -32,11 +34,12 @@ internal class CharacterRepositoryImpl(
     private val characterDAO: CharacterDAO
 ) : CharacterRepository {
 
-    override suspend fun getCharacters(): Flow<List<Character>> =
+    override suspend fun getCharacters(): CommonFlow<List<Character>> =
         characterDAO
             .getCharacters()
             .mapElement(transform = CharacterObject::toModel)
             .also { if (it.first().isEmpty()) fetchNext() }
+            .asCommonFlow()
 
 
     /**

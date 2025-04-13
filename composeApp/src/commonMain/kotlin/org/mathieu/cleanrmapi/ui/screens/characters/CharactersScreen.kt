@@ -20,24 +20,20 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
 import cleanrmapiudf.composeapp.generated.resources.Res
 import cleanrmapiudf.composeapp.generated.resources.characters
 import org.jetbrains.compose.resources.stringResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.mathieu.cleanrmapi.ui.core.composables.CharacterCard
-import org.mathieu.cleanrmapi.ui.core.composables.PreviewContent
 import org.mathieu.cleanrmapi.ui.core.composables.Screen
 import org.mathieu.cleanrmapi.ui.core.theme.OnPrimaryColor
 import org.mathieu.cleanrmapi.ui.core.theme.PrimaryColor
 import org.mathieu.cleanrmapi.ui.screens.characters.CharactersContracts.*
 
 @Composable
-fun CharactersScreen(navController: NavController) {
+fun CharactersScreen() {
 
     Screen(
-        viewModel = viewModel { CharactersViewModel() },
-        navController = navController
+        viewModel = viewModel { CharactersViewModel() }
     ) { state, viewModel ->
 
         Content(
@@ -109,10 +105,3 @@ private fun Content(
     }
 
 }
-
-@Preview
-@Composable
-private fun CharactersPreview() = PreviewContent {
-    Content()
-}
-

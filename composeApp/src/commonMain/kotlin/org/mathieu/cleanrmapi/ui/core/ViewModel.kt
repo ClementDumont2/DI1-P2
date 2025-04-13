@@ -4,10 +4,14 @@ package org.mathieu.cleanrmapi.ui.core
 
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -76,4 +80,8 @@ open class ViewModel<State>(initialState: State): androidx.lifecycle.ViewModel()
 
     }
 
+}
+
+fun <T> Flow<T>.collect(onEach: (T) -> Unit): Job {
+    return this.onEach { onEach.invoke(it) }.launchIn(MainScope())
 }

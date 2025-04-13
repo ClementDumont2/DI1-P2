@@ -3,8 +3,8 @@ package org.mathieu.cleanrmapi.ui.screens.characters
 import org.koin.core.component.inject
 import org.mathieu.cleanrmapi.domain.character.CharacterRepository
 import org.mathieu.cleanrmapi.domain.character.models.Character
-import org.mathieu.cleanrmapi.ui.core.Destination
 import org.mathieu.cleanrmapi.ui.core.ViewModel
+import org.mathieu.cleanrmapi.ui.core.navigation.CharacterDestination.CharacterDetails
 import org.mathieu.cleanrmapi.ui.screens.characters.CharactersContracts.ReachedTheBottomOfTheList
 import org.mathieu.cleanrmapi.ui.screens.characters.CharactersContracts.SelectedCharacter
 import org.mathieu.cleanrmapi.ui.screens.characters.CharactersContracts.UiAction
@@ -43,7 +43,7 @@ class CharactersViewModel : ViewModel<UiState>(UiState()) {
 
 
     private fun selectedCharacter(character: Character) =
-        sendEvent(Destination.CharacterDetails(character.id.toString()))
+        sendEvent(CharacterDetails(character.id))
 
 
     private fun loadMoreCharacters() =

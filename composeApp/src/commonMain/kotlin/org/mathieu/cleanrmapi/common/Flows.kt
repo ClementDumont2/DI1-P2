@@ -2,6 +2,9 @@ package org.mathieu.cleanrmapi.common
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import io.ktor.utils.io.core.Closeable
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.*
 
 /**
  * Transforms each element in a list within a Flow.
@@ -28,3 +31,10 @@ inline fun <T, R> Flow<List<T>>.mapElement(crossinline transform: suspend (value
     this.map { list ->
         list.map { element -> transform(element) }
     }
+
+fun <T> Flow<T>.asCommonFlow(): CommonFlow<T> = CommonFlow(this)
+
+/**
+ * In order to permit Swift interop, we've made a custom flow wrapper that can expose wrapped values of flows
+ */
+class CommonFlow<T>(private val origin: Flow<T>) : Flow<T> by origin

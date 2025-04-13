@@ -2,8 +2,8 @@ package org.mathieu.cleanrmapi.ui.screens.episodedetails
 
 import org.mathieu.cleanrmapi.domain.character.models.Character
 import org.mathieu.cleanrmapi.domain.episode.usecases.GetEpisodeWithCharacters
-import org.mathieu.cleanrmapi.ui.core.Destination
 import org.mathieu.cleanrmapi.ui.core.ViewModel
+import org.mathieu.cleanrmapi.ui.core.navigation.CharacterDestination.CharacterDetails
 
 sealed interface EpisodeDetailsAction {
     data class SelectedCharacter(val character: Character): EpisodeDetailsAction
@@ -47,8 +47,7 @@ class EpisodeDetailsViewModel :
 
 
     private fun selectedCharacter(character: Character) =
-        sendEvent(Destination.CharacterDetails(character.id.toString()))
-
+        sendEvent(CharacterDetails(character.id))
 
 
 }

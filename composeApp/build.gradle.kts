@@ -52,7 +52,6 @@ kotlin {
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
-            implementation(libs.compose.navigation)
             implementation(compose.materialIconsExtended)
             implementation(libs.lifecycle.viewmodel.compose)
 
@@ -71,6 +70,7 @@ kotlin {
         // Specific platforms
         androidMain.dependencies {
 
+            implementation(libs.compose.navigation)
 
             datastore()
 
