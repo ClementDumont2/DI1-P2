@@ -32,12 +32,10 @@ class CharacterDetailsViewModel(application: Application) : ViewModel<CharacterD
     }
 
     private fun loadLocationType(locationPreview: Pair<String, Int>) {
-        Log.d("VIEWMODEL", "loadLocationType: $locationPreview")
         fetchData(
             source = { locationRepository.getLocationPreview(id = locationPreview.second) }
         ) {
             onSuccess { location ->
-                Log.d("VIEWMODEL", "loadLocationType: $location")
                 updateState {
                     copy(
                         locationPreview = LocationPreview(

@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -120,18 +121,22 @@ private fun LocationDetailsContent(
 
 
                 }
-
+            if (state.isLoading){
+                Text(text = "Chargement en cours...")
+                CircularProgressIndicator()
+            }
+            else{
                 Column(
                     modifier = Modifier.fillMaxWidth().padding(top = 24.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-
                     Spacer(modifier = Modifier.height(12.dp))
-
                     LocationCard(state.location)
                 }
 
 
             }
+            }
+
         }
     }

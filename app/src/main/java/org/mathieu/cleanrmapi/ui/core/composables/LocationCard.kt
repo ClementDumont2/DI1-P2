@@ -23,5 +23,9 @@ fun LocationCard(location: Location){
         Text(text = "Type de localisation : ${location.type}")
         Text(text = "Dimension : ${location.dimension}")
         Spacer(modifier = Modifier.height(6.dp))
+        Text(text = "Liste des ${location.residents.size} résidents : ")
+        for (character in location.residents) {
+            Text(text = "Resident : ${character.name}")
+        }
     }
 }

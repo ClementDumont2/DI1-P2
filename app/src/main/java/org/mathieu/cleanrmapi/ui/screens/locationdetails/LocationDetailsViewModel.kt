@@ -1,6 +1,7 @@
 package org.mathieu.cleanrmapi.ui.screens.locationdetails
 
 import android.app.Application
+import android.util.Log
 import org.koin.core.component.inject
 import org.mathieu.cleanrmapi.domain.models.location.Location
 import org.mathieu.cleanrmapi.domain.repositories.CharacterRepository
@@ -18,7 +19,7 @@ class LocationDetailsViewModel(application: Application) : ViewModel<LocationDet
             source = { locationRepository.getLocation(id = locationId) }
         ) {
 
-            onSuccess {
+            onSuccess { location ->
                 updateState { copy(location = location, error = null) }
             }
 

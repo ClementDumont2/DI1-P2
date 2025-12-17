@@ -60,7 +60,7 @@ fun CharacterDetailsScreen(
     CharacterDetailsContent(
         state = state,
         onClickBack = navController::popBackStack,
-        onClickLocation = { navController.navigate("locationDetail/${id}") }
+        onClickLocation = { navController.navigate("locationDetail/${state.locationPreview.id}") }
     )
 
 }
