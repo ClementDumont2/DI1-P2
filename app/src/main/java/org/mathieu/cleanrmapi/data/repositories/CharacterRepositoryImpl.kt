@@ -35,7 +35,6 @@ internal class CharacterRepositoryImpl(
             .mapElement(transform = CharacterObject::toModel)
             .also { if (it.first().isEmpty()) fetchNext() }
 
-
     /**
      * Fetches the next batch of characters and saves them to local storage.
      *
@@ -67,6 +66,16 @@ internal class CharacterRepositoryImpl(
 
     }
 
+    override suspend fun getCharactersByIds(ids: List<Int>): List<Character> {
+        return characterApi
+            .getCharactersByIds(ids)
+            .map { response ->
+                val obj = response.toRealmObject()
+                characterLocal.insert(obj)
+                obj.toModel()
+            }
+    }
+
 
     override suspend fun loadMore() = fetchNext()
 
@@ -92,7 +101,6 @@ internal class CharacterRepositoryImpl(
                 obj.toModel()
             }
             ?: throw Exception("Character not found.")
-
 
 }
 

@@ -1,4 +1,4 @@
-package org.mathieu.cleanrmapi.ui.screens.characterdetails
+package org.mathieu.cleanrmapi.ui.screens.locationdetails
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.ExperimentalAnimationApi
@@ -13,8 +13,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -26,52 +24,41 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.draw.blur
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import coil.compose.SubcomposeAsyncImage
-import org.mathieu.cleanrmapi.ui.core.composables.LocationPreviewCard
-import org.mathieu.cleanrmapi.ui.core.composables.PreviewContent
+import org.mathieu.cleanrmapi.ui.core.composables.LocationCard
 import org.mathieu.cleanrmapi.ui.core.theme.Purple40
 
-private typealias UIState = CharacterDetailsState
-
+private typealias UIState = LocationDetailsState
 @Composable
-fun CharacterDetailsScreen(
+fun LocationDetailsScreen(
     navController: NavController,
     id: Int
 ) {
-    val viewModel: CharacterDetailsViewModel = viewModel()
+    val viewModel: LocationDetailsViewModel = viewModel()
     val state by viewModel.state.collectAsState()
 
-    viewModel.init(characterId = id)
+    viewModel.init(locationId = id)
 
-    CharacterDetailsContent(
+    LocationDetailsContent(
         state = state,
-        onClickBack = navController::popBackStack,
-        onClickLocation = { navController.navigate("locationDetail/${id}") }
+        onClickBack = navController::popBackStack
     )
 
 }
 
-
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class)
 @Composable
-private fun CharacterDetailsContent(
+private fun LocationDetailsContent(
     state: UIState = UIState(),
-    onClickBack: () -> Unit = { },
-    onClickLocation: (id: Int) -> Unit = { }
+    onClickBack: () -> Unit = { }
 ) = Scaffold(topBar = {
 
     Row(
@@ -90,7 +77,7 @@ private fun CharacterDetailsContent(
         )
 
         Text(
-            text = state.name,
+            text = state.location.name,
             textAlign = TextAlign.Center,
             color = Color.White,
             fontSize = 16.sp,
@@ -114,16 +101,7 @@ private fun CharacterDetailsContent(
                 )
             } ?: Box(modifier = Modifier.fillMaxSize()) {
 
-                Box(Modifier.align(Alignment.TopCenter)) {
-
-                    SubcomposeAsyncImage(
-                        modifier = Modifier
-                            .blur(100.dp)
-                            .alpha(0.3f)
-                            .fillMaxWidth(),
-                        model = state.avatarUrl,
-                        contentDescription = null
-                    )
+                Box(Modifier.align(Alignment.TopCenter))
 
                     Box(
                         modifier = Modifier
@@ -147,32 +125,13 @@ private fun CharacterDetailsContent(
                     modifier = Modifier.fillMaxWidth().padding(top = 24.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    SubcomposeAsyncImage(
-                        modifier = Modifier
-                            .size(120.dp)
-                            .clip(CircleShape)
-                            .shadow(3.dp),
-                        model = state.avatarUrl,
-                        contentDescription = null
-                    )
 
                     Spacer(modifier = Modifier.height(12.dp))
 
-                    Text(text = state.name)
-
-                    LocationPreviewCard(state.locationPreview, onClick = onClickLocation)
+                    LocationCard(state.location)
                 }
 
 
             }
         }
     }
-}
-
-
-@Preview
-@Composable
-private fun CharacterDetailsPreview() = PreviewContent {
-    CharacterDetailsContent()
-}
-

@@ -29,6 +29,11 @@ internal class CharacterApi(private val client: HttpClient) {
         .accept(HttpStatusCode.OK)
         .body()
 
+    suspend fun getCharactersByIds(ids: List<Int>): List<CharacterResponse> {
+        val idsParam = ids.joinToString(",")
+        return client.get("character/$idsParam").body()
+    }
+
     /**
      * Fetches the details of a character with the given ID from the service.
      *
@@ -40,5 +45,4 @@ internal class CharacterApi(private val client: HttpClient) {
         .get("character/$id")
         .accept(HttpStatusCode.OK)
         .body()
-
 }

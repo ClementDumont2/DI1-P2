@@ -16,6 +16,7 @@ import androidx.navigation.navArgument
 import org.mathieu.cleanrmapi.ui.core.theme.LeTheme
 import org.mathieu.cleanrmapi.ui.screens.characterdetails.CharacterDetailsScreen
 import org.mathieu.cleanrmapi.ui.screens.characters.CharactersScreen
+import org.mathieu.cleanrmapi.ui.screens.locationdetails.LocationDetailsScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,6 +55,17 @@ private fun MainContent() {
 
         }
 
-    }
+        composable(
+            route = "locationDetail/{locationId}",
+            arguments = listOf(navArgument("locationId") { type = NavType.IntType })
+        ) { backStackEntry ->
+            LocationDetailsScreen(
+                navController = navController,
+                id = backStackEntry.arguments?.getInt("locationId") ?: -1
 
+            )
+
+        }
+
+    }
 }

@@ -11,11 +11,15 @@ interface CharacterRepository {
      * @return A flow emitting a list of characters.
      */
     suspend fun getCharacters(): Flow<List<Character>>
+    suspend fun getCharactersByIds(ids: List<Int>): List<Character>
 
     /**
      * Loads more characters from the data source, usually used for pagination purposes.
      * This function typically fetches the next set of characters and appends them to the existing list.
      */
+
+
+
     suspend fun loadMore()
 
     /**
